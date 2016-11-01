@@ -1,0 +1,12 @@
+<p>
+  <strong>Title:</strong>
+  <%= @game.title %>
+</p>
+ 
+<p>
+  <strong>Link:</strong>
+  <%= @game.link %>
+</p>
+
+<%= link_to 'Edit', edit_game_path(@game) %> 
+<%= link_to 'Back', games_path %>

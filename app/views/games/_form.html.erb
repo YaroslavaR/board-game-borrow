@@ -1,0 +1,63 @@
+<%= form_for @game do |f| %>
+  
+  <% if @game.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@game.errors.count, "error") %> prohibited
+        this game from being saved:
+      </h2>
+      <ul>
+        <% @game.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+ 
+  <p>
+    <%= f.label :complexity %><br>
+    <%= radio_button_tag(:complexity, "1") %>
+    <%= label_tag(:complexity_1, "1") %>
+    <%= radio_button_tag(:complexity, "2") %>
+    <%= label_tag(:complexity_2, "2") %>
+  </p>
+
+  <p>
+    <%= f.label :minimum_number_of_players %><br>
+    <%= f.text_field :min_players %>
+    <%= f.label :maximum_number_of_players %><br>
+    <%= f.text_field :max_players %>
+  </p>
+
+  <p>
+    <%= f.label :playing_time %><br>
+    <%= f.select :playing_time, ['50', '60'] %>
+  </p>
+
+  <p>
+    <%= f.label :location %><br>
+    <%= f.text_field :location %>
+  </p>
+
+  <p>
+    <%= f.label :suggested_players_age %><br>
+    <%= f.label :minimum_players_age %><br>
+    <%= f.text_field :min_player_age %>
+    <%= f.label :maximum_players_age %><br>
+    <%= f.text_field :max_player_age %>
+  </p>
+
+  <p>
+    <%= f.label :link %><br>
+    <%= f.text_field :link %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
