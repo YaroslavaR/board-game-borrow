@@ -10,3 +10,11 @@
 
 <%= link_to 'Edit', edit_game_path(@game) %> 
 <%= link_to 'Back', games_path %>
+
+
+
+<div class="simple-calendar">
+  <%= month_calendar do |date| %>
+    <%= date %>
+  <% end %>
+</div>
