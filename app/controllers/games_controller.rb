@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  
+  before_action :set_rentals
   http_basic_authenticate_with name: "admin", password: "secret", except: [:index, :show]
 
   def index
@@ -26,6 +26,7 @@ class GamesController < ApplicationController
   
   def show
     @game = Game.find(params[:id])
+    #render template: "rentals/index"
   end
 
   def update
@@ -47,5 +48,9 @@ class GamesController < ApplicationController
 
   private def game_params
     params.require(:game).permit(:title, :min_players, :max_players, :min_player_age, :max_player_age, :playing_time, :complexity, :location, :link)
+  end
+
+  def set_rentals
+    @rentals = Rental.all
   end
 end
