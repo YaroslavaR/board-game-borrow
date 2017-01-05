@@ -18,17 +18,17 @@
 
   <div class="field">
     <%= f.label :start_time %>
-    <%= f.datetime_select :start_time %>
+    <%= f.date_select :start_time, default: (@date.nil? ? Date.today : Date.parse(@date)) %>
   </div>
 
   <div class="field">
     <%= f.label :end_time %>
-    <%= f.datetime_select :end_time %>
+    <%= f.date_select :end_time, default: (@date.nil? ? Date.today : Date.parse(@date)) %>
   </div>
 
   <div class="field">
     <%= f.label :game_id %>
-    <%= f.text_field :game_id %>
+    <%= f.text_field :game_id, value: @game_id %>
   </div>
 
   <div class="actions">

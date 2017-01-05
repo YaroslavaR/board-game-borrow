@@ -9,22 +9,23 @@
 </p>
 
 <%= link_to 'Edit', edit_game_path(@game) %> 
-<%= link_to 'Back', games_path %>
+<%= link_to 'Back to games list', games_path %>
 
 
 
 <div class="simple-calendar">
   <%= month_calendar events: @rentals do |date, rentals| %>
-  <%= date %>
-
-  <% rentals.each do |rental| %>
-  	<% if @game.id == rental.game_id %>
-	    <div>
-	      <%= rental.name %>
-	    </div>
-	<% end %>
+    <%= link_to date, new_rental_path(date: date, game_id: @game.id) %>
+    <% game_rentals = {}
+       rentals.each do |rental|
+         game_rentals[rental.game_id] = rental
+       end %>
+    <div>
+      <%= if !game_rentals[@game.id].nil?
+      	    link_to game_rentals[@game.id].name, game_rentals[@game.id]
+      	  end %>
+    </div>
   <% end %>
-<% end %>
 </div>
   
 

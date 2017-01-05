@@ -10,11 +10,14 @@ class RentalsController < ApplicationController
   # GET /rentals/1
   # GET /rentals/1.json
   def show
+    @rental = Rental.find(params[:id])
   end
 
   # GET /rentals/new
   def new
     @rental = Rental.new
+    @date = params[:date]
+    @game_id = params[:game_id]
   end
 
   # GET /rentals/1/edit
