@@ -18,10 +18,10 @@
           <td><%= rental.name %></td>
           <td><%= rental.start_time %></td>
           <td><%= rental.end_time %></td>
-          <td><%= rental.game_id %></td>
+          <td><%= rental.game.title %></td>
           <td><%= link_to 'Show', rental %></td>
           <td><%= link_to 'Edit', edit_rental_path(rental) %></td>
-          <td><%= link_to 'Destroy', rental, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td><%= link_to 'Delete', rental, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
   
     <% end %>

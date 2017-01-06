@@ -13,7 +13,7 @@
       </ul>
     </div>
   <% end %>
-
+<div class="form-group">
   <p>
     <%= f.label :title %><br>
     <%= f.text_field :title %>
@@ -21,35 +21,36 @@
  
   <p>
     <%= f.label :complexity %><br>
-    <%= radio_button_tag(:complexity, "1") %>
-    <%= label_tag(:complexity_1, "1") %>
-    <%= radio_button_tag(:complexity, "2") %>
-    <%= label_tag(:complexity_2, "2") %>
+    <%= f.number_field :complexity, :step => "0.01" %>
+  </p>
+
+  <p>
+    <%= f.label :rating %><br>
+    <%= f.number_field :rating, :step => "0.1" %>
   </p>
 
   <p>
     <%= f.label :minimum_number_of_players %><br>
     <%= f.text_field :min_players %>
+  </p>
+  <p>
     <%= f.label :maximum_number_of_players %><br>
     <%= f.text_field :max_players %>
   </p>
 
   <p>
     <%= f.label :playing_time %><br>
-    <%= f.select :playing_time, ['50', '60'] %>
+    <%= f.number_field :playing_time %>
   </p>
 
   <p>
     <%= f.label :location %><br>
-    <%= f.text_field :location %>
+    <%= f.select :location, ['UP', 'DOWN'] %>
   </p>
 
   <p>
-    <%= f.label :suggested_players_age %><br>
     <%= f.label :minimum_players_age %><br>
     <%= f.text_field :min_player_age %>
-    <%= f.label :maximum_players_age %><br>
-    <%= f.text_field :max_player_age %>
   </p>
 
   <p>
@@ -57,7 +58,13 @@
     <%= f.text_field :link %>
   </p>
 
+  <div class="field">
+    <%= f.label :expansion_for %>
+    <%= f.select :expansion_for, Game.all.pluck(:title, :id) << [nil] %>
+  </div>
+
   <p>
     <%= f.submit %>
   </p>
+</div>
 <% end %>

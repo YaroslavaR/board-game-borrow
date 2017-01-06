@@ -1,14 +1,30 @@
-<p>
-  <h3>Title: <%= @game.title %></h3>
-  
-</p>
- 
-<p>
-  <h3>Link: <%= @game.link %></h3>
-  
-</p>
+<div class="row">
+  <div class="col-sm-5"></div>
+  <div class="col-sm-4"><h3><%= link_to @game.title, @game.link %></h3></div>
+  <div class="col-sm-3"></div>
+</div>
+<div class="row">
+  <div class="col-sm-5"></div>
+  <div class="col-sm-4"><h3>Rating: <%= @game.rating %></h3></div>
+</div>
+<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-2">
+      <% if @game.min_players != @game.max_players %>
+        <h3> <%= @game.min_players %>-<%= @game.max_players %> players </h3>
+      <% else %>
+        <h3> <%= @game.max_players %> players </h3>
+      <% end %>
+  </div>
+  <div class="col-sm-2"><h3> <%= @game.playing_time %> min </h3></div>
+</div>
+<div class="row">
+  <div class="col-sm-4"></div>
+  <div class="col-sm-2"><h3> Location: <%= @game.location %> </h3></div>
+  <div class="col-sm-2"><h3> Complexity: <%= @game.complexity %> </h3></div>
+</div>
 
-<h3>
+<h4>
   <div class="simple-calendar">
     <%= month_calendar events: @rentals do |date, rentals| %>
       <%= link_to date, new_rental_path(date: date, game_id: @game.id) %>
@@ -23,11 +39,11 @@
       </div>
     <% end %>
   </div>
-</h3>
+</h4>
 <h4>
 <% if user_signed_in? && current_user.is_admin == 1 %>
   <td><%= link_to 'Edit', edit_game_path(@game) %></td>
-  <td><%= link_to 'Destroy', game_path(@game),
+  <td><%= link_to 'Delete', game_path(@game),
           method: :delete,
           data: { confirm: 'Are you sure?' } %></td>
 <% end %>
@@ -58,7 +74,7 @@
 	        <td><%= link_to 'Show', rental %></td>
           <% if rental.user == current_user %>
   	        <td><%= link_to 'Edit', edit_rental_path(rental) %></td>
-  	        <td><%= link_to 'Destroy', rental, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  	        <td><%= link_to 'Delete', rental, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           <% end %>
 	      </tr>
 	    <% end %>

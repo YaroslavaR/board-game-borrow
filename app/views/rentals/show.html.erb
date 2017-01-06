@@ -1,23 +1,29 @@
-<p>
-  <strong>Name:</strong>
-  <%= @rental.name %>
-</p>
 
-<p>
-  <strong>Start time:</strong>
-  <%= @rental.start_time %>
-</p>
+<h1>Rental</h1>
 
-<p>
-  <strong>End time:</strong>
-  <%= @rental.end_time %>
-</p>
+<table  class="table table-striped table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Start time</th>
+      <th>End time</th>
+      <th>Game</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
 
-<p>
-  <strong>Game:</strong>
-  <%= @rental.game_id %>
-</p>
-<% if user_signed_in? && @rental.user == current_user %>
-	<%= link_to 'Edit', edit_rental_path(@rental) %> |
-<% end %>
+  <tbody>
+	      <tr>
+	        <td><%= @rental.name %></td>
+	        <td><%= @rental.start_time %></td>
+	        <td><%= @rental.end_time %></td>
+	        <td><%= @rental.game.title %></td>
+	        <% if user_signed_in? && @rental.user == current_user %>
+	  	        <td><%= link_to 'Edit', edit_rental_path(@rental) %></td>
+	  	        <td><%= link_to 'Delete', @rental, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  	        <% end %>
+	      </tr>
+  </tbody>
+</table>
 <%= link_to 'Back', game_path(@rental.game_id) %>
+<br>

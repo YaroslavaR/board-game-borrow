@@ -28,7 +28,13 @@
 
   <div class="field">
     <%= f.label :game_id %>
-    <%= f.text_field :game_id, value: @game_id %>
+    <%= f.select :game_id, Game.all.pluck(:title, :id), :selected => Game.find(@game_id).id %>
+
+  </div>
+
+  <div class="field">
+    <%= f.label :is_optional %>
+    <%= f.check_box :is_optional %>
   </div>
 
   <div class="actions">

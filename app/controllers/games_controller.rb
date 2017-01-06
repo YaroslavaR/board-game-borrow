@@ -48,7 +48,7 @@ class GamesController < ApplicationController
   end
 
   private def game_params
-    params.require(:game).permit(:title, :min_players, :max_players, :min_player_age, :max_player_age, :playing_time, :complexity, :location, :link)
+    params.require(:game).permit(:title, :min_players, :max_players, :min_player_age, :rating, :playing_time, :complexity, :location, :link, :expansion_for)
   end
 
   def set_rentals
