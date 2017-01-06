@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   before_action :set_rentals
-  http_basic_authenticate_with name: "admin", password: "secret", except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show]
+  #http_basic_authenticate_with name: "admin", password: "secret", except: [:index, :show]
 
   def index
     @games = Game.all

@@ -49,3 +49,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Calendar gem
 gem "simple_calendar", "~> 2.0"
+
+# Devise - gem for authentication
+gem 'devise', '~> 4.2'
