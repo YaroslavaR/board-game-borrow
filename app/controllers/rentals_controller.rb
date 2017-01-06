@@ -1,5 +1,6 @@
 class RentalsController < ApplicationController
   before_action :set_rental, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index, :show]
 
   # GET /rentals
   # GET /rentals.json
@@ -15,7 +16,7 @@ class RentalsController < ApplicationController
 
   # GET /rentals/new
   def new
-    @rental = Rental.new
+    @rental = current_user.rental.build
     @date = params[:date]
     @game_id = params[:game_id]
   end
@@ -27,7 +28,7 @@ class RentalsController < ApplicationController
   # POST /rentals
   # POST /rentals.json
   def create
-    @rental = Rental.new(rental_params)
+    @rental = current_user.rental.build(rental_params)
 
     respond_to do |format|
       if @rental.save
@@ -62,6 +63,11 @@ class RentalsController < ApplicationController
       format.html { redirect_to rentals_url, notice: 'Rental was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def my_rentals
+    @rentals = current_user.rental
+    
   end
 
   private

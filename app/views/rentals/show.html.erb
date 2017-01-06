@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Name:</strong>
   <%= @rental.name %>
@@ -19,6 +17,7 @@
   <strong>Game:</strong>
   <%= @rental.game_id %>
 </p>
-
-<%= link_to 'Edit', edit_rental_path(@rental) %> |
-<%= link_to 'Back', :back %>
+<% if user_signed_in? && @rental.user == current_user %>
+	<%= link_to 'Edit', edit_rental_path(@rental) %> |
+<% end %>
+<%= link_to 'Back', game_path(@rental.game_id) %>
