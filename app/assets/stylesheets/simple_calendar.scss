@@ -22,12 +22,12 @@
     border-right: 1px solid rgb(221, 221, 221);
     border-top: 0px none rgb(51, 51, 51);
     box-sizing: border-box;
-    text-align: left;
+    text-align: center;
   }
 
   td {
     padding: 6px;
-    vertical-align: top;
+    vertical-align: center;
     width: 14%;
 
     border: 1px solid #ddd;
@@ -43,6 +43,7 @@
     border-left-color: rgb(221, 221, 221);
     border-left-style: solid;
     border-left-width: 1px;
+    text-align: center;
   }
 
   .day {

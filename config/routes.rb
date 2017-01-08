@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   get '/rentals/my_rentals' => 'rentals#my_rentals'
   resources :rentals
-  devise_for :users
+  devise_for :users, :controllers => { registrations: 'registrations' }
   #get 'games_list/index'
   resources :games
   get 'games_list/list'

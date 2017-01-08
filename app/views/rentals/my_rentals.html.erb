@@ -3,31 +3,28 @@
 <table class="table table-striped table-bordered table-hover">
   <thead class="thead-inverse">
     <tr>
-      <th>Name</th>
-      <th>Start time</th>
-      <th>End time</th>
+      <th>Date</th>
       <th>Game</th>
+      <th>Status</th>
       <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @rentals.each do |rental| %>
-     
-        <tr>
-          <td><%= rental.name %></td>
-          <td><%= rental.start_time %></td>
-          <td><%= rental.end_time %></td>
-          <td><%= rental.game.title %></td>
-          <td><%= link_to 'Show', rental %></td>
-          <td><%= link_to 'Edit', edit_rental_path(rental) %></td>
-          <td><%= link_to 'Delete', rental, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-  
+      <% @class = rental.is_optional? ? (rental.is_vetoed.nil? ? "warning" : "danger") : "success"%>
+      <tr class=<%= @class %>>
+        <td><%= rental.start_time %></td>
+        <td><%= rental.game.title %></td>
+        <td><%= rental.is_optional? ? (rental.is_vetoed.nil? ? 'Optional' : 'Vetoed') : 'Guaranteed' %></td>
+        <td><%= link_to 'Show', rental, :class => "btn" %></td>
+        <td><%= link_to 'Edit', edit_rental_path(rental), :class => "btn" %></td>
+        <td><%= link_to 'Delete', rental, :class => "btn", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
 
-<%= link_to 'New Rental', new_rental_path %>
+<%= link_to 'New Rental', new_rental_path, :class => "btn" %>

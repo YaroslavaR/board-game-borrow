@@ -1,29 +1,32 @@
 
 <h1>Rental</h1>
 
-<table  class="table table-striped table-bordered table-hover">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Start time</th>
-      <th>End time</th>
-      <th>Game</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="bs-component">
+  <table  class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Game</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
 
-  <tbody>
-	      <tr>
-	        <td><%= @rental.name %></td>
-	        <td><%= @rental.start_time %></td>
-	        <td><%= @rental.end_time %></td>
-	        <td><%= @rental.game.title %></td>
-	        <% if user_signed_in? && @rental.user == current_user %>
-	  	        <td><%= link_to 'Edit', edit_rental_path(@rental) %></td>
-	  	        <td><%= link_to 'Delete', @rental, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  	        <% end %>
-	      </tr>
-  </tbody>
-</table>
-<%= link_to 'Back', game_path(@rental.game_id) %>
+    <tbody>
+        <% @class = @rental.is_optional? ? (@rental.is_vetoed.nil? ? "warning" : "danger") : "success"%>
+        <tr class=<%= @class %>>
+          <td><%= @rental.start_time %></td>
+          <td><%= @rental.game.title %></td>
+          <td><%= @rental.user.name %></td> 
+          <td><%= @rental.user.email %></td>
+          <td><%= @rental.is_optional? ? (@rental.is_vetoed.nil? ? 'Optional' : 'Vetoed') : 'Guaranteed' %></td>
+          <td><%= link_to 'Edit', edit_rental_path(@rental), :class => "btn btn-default btn-xs" %>
+          <%= link_to 'Delete', @rental, :class => "btn btn-primary btn-xs", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+<%= link_to 'Rent this game', game_path(@rental.game_id), :class => "btn btn-default" %>
 <br>

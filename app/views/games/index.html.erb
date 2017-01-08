@@ -1,4 +1,4 @@
-<h1>Listing games</h1>
+<h1>Games list</h1>
 
 <table class="table table-striped table-bordered">
   <tr>
@@ -7,7 +7,7 @@
     <th>Playing time</th>
     <th>Complexity</th>
     <% if user_signed_in? && current_user.is_admin == 1 %>
-      <th><%= link_to 'New game', new_game_path %></th>
+      <th><%= link_to 'New game', new_game_path, :class => "btn" %></th>
     <% end %>
   </tr>
  
@@ -23,7 +23,7 @@
       </td>
       <td><%= game.playing_time %> min</td>
       <td><%= game.complexity %></td>
-      <td><%= link_to 'Rent', game_path(game) %></td>
+      <td><%= link_to 'Rent', game_path(game), :class => "btn" %></td>
     </tr>
   <% end %>
 </table>

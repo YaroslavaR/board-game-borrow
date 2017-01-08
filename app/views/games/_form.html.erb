@@ -1,70 +1,99 @@
-<%= form_for @game do |f| %>
-  
-  <% if @game.errors.any? %>
-    <div id="error_explanation">
-      <h2>
-        <%= pluralize(@game.errors.count, "error") %> prohibited
-        this game from being saved:
-      </h2>
-      <ul>
-        <% @game.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-<div class="form-group">
-  <p>
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </p>
- 
-  <p>
-    <%= f.label :complexity %><br>
-    <%= f.number_field :complexity, :step => "0.01" %>
-  </p>
+<div class="well bs-component">
 
-  <p>
-    <%= f.label :rating %><br>
-    <%= f.number_field :rating, :step => "0.1" %>
-  </p>
+  <%= form_for @game, :html => {:class => 'form-horizontal'} do |f| %>
+    
+    <% if @game.errors.any? %>
+      <div id="error_explanation">
+        <h2>
+          <%= pluralize(@game.errors.count, "error") %> prohibited
+          this game from being saved:
+        </h2>
+        <ul>
+          <% @game.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-  <p>
-    <%= f.label :minimum_number_of_players %><br>
-    <%= f.text_field :min_players %>
-  </p>
-  <p>
-    <%= f.label :maximum_number_of_players %><br>
-    <%= f.text_field :max_players %>
-  </p>
+    <fieldset>
+      <div class="form-group">
+        <%= f.label :title, {:class => "col-lg-2 control-label"} %>
+        <div class="col-lg-10">
+          <%= f.text_field :title, {:class => "form-control"} %>
+        </div>
+      </div>
 
-  <p>
-    <%= f.label :playing_time %><br>
-    <%= f.number_field :playing_time %>
-  </p>
+      <div class="form-group">
+        <%= f.label :complexity, {:class => "col-lg-2 control-label"} %>
+        <div class="col-lg-10">
+          <%= f.number_field :complexity, {:step => "0.01", :class => "form-control"} %>
+        </div>
+      </div>
 
-  <p>
-    <%= f.label :location %><br>
-    <%= f.select :location, ['UP', 'DOWN'] %>
-  </p>
+      <div class="form-group">
+        <%= f.label :rating, "BGG rating", {:class => "col-lg-2 control-label"} %>
+        <div class="col-lg-10">
+        <%= f.number_field :rating, {:step => "0.1", :class => "form-control"} %>
+        </div>
+      </div>
 
-  <p>
-    <%= f.label :minimum_players_age %><br>
-    <%= f.text_field :min_player_age %>
-  </p>
+      <div class="form-group">
+        <%= f.label :minimum_number_of_players, "Min # of players", {:class => "col-lg-2 control-label"} %>
+        <div class="col-lg-10">
+        <%= f.text_field :min_players, {:class => "form-control"} %>
+        </div>
+      </div>
 
-  <p>
-    <%= f.label :link %><br>
-    <%= f.text_field :link %>
-  </p>
+      <div class="form-group">
+        <%= f.label :maximum_number_of_players, "Max # of players", {:class => "col-lg-2 control-label"} %>
+        <div class="col-lg-10">
+        <%= f.text_field :max_players, {:class => "form-control"} %>
+        </div>
+      </div>
 
-  <div class="field">
-    <%= f.label :expansion_for %>
-    <%= f.select :expansion_for, Game.all.pluck(:title, :id) << [nil] %>
+      <div class="form-group">
+        <%= f.label :playing_time, {:class => "col-lg-2 control-label"} %>
+        <div class="col-lg-10">
+        <%= f.number_field :playing_time, {:class => "form-control"} %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :location, {:class => "col-lg-2 control-label"} %>
+        <div class="col-lg-10">
+        <%= f.select :location, ['UP', 'DOWN'], {}, {:class => "form-control"} %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :minimum_players_age, "Min age", {:class => "col-lg-2 control-label"} %>
+        <div class="col-lg-10">
+        <%= f.text_field :min_player_age, {:class => "form-control"} %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :link, "Link to BGG", {:class => "col-lg-2 control-label"} %>
+        <div class="col-lg-10">
+        <%= f.text_field :link, {:class => "form-control"} %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :expansion_for, {:class => "col-lg-2 control-label"} %>
+        <div class="col-lg-10">
+        <%= f.select :expansion_for, Game.all.pluck(:title, :id) << [nil], {}, {:class => "form-control"} %>
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+          <%= f.submit :class => "btn btn-primary" %>
+          <%= link_to 'Back', :back, :class => "btn btn-default" %>
+        </div>
+      </div>
+
+    </fieldset>
   </div>
-
-  <p>
-    <%= f.submit %>
-  </p>
-</div>
-<% end %>
+  <% end %>
