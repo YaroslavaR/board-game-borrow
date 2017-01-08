@@ -1,4 +1,4 @@
-<div class="well bs-component">
+<div class="well" style="max-width: 800px">
 
   <%= form_for @game, :html => {:class => 'form-horizontal'} do |f| %>
     
@@ -18,77 +18,77 @@
 
     <fieldset>
       <div class="form-group">
-        <%= f.label :title, {:class => "col-lg-2 control-label"} %>
-        <div class="col-lg-10">
+        <%= f.label :title, {:class => "col-lg-3 control-label"} %>
+        <div class="col-lg-9">
           <%= f.text_field :title, {:class => "form-control"} %>
         </div>
       </div>
 
       <div class="form-group">
-        <%= f.label :complexity, {:class => "col-lg-2 control-label"} %>
-        <div class="col-lg-10">
+        <%= f.label :complexity, {:class => "col-lg-3 control-label"} %>
+        <div class="col-lg-9">
           <%= f.number_field :complexity, {:step => "0.01", :class => "form-control"} %>
         </div>
       </div>
 
       <div class="form-group">
-        <%= f.label :rating, "BGG rating", {:class => "col-lg-2 control-label"} %>
-        <div class="col-lg-10">
+        <%= f.label :rating, "BGG rating", {:class => "col-lg-3 control-label"} %>
+        <div class="col-lg-9">
         <%= f.number_field :rating, {:step => "0.1", :class => "form-control"} %>
         </div>
       </div>
 
       <div class="form-group">
-        <%= f.label :minimum_number_of_players, "Min # of players", {:class => "col-lg-2 control-label"} %>
-        <div class="col-lg-10">
+        <%= f.label :minimum_number_of_players, "Min # of players", {:class => "col-lg-3 control-label"} %>
+        <div class="col-lg-9">
         <%= f.text_field :min_players, {:class => "form-control"} %>
         </div>
       </div>
 
       <div class="form-group">
-        <%= f.label :maximum_number_of_players, "Max # of players", {:class => "col-lg-2 control-label"} %>
-        <div class="col-lg-10">
+        <%= f.label :maximum_number_of_players, "Max # of players", {:class => "col-lg-3 control-label"} %>
+        <div class="col-lg-9">
         <%= f.text_field :max_players, {:class => "form-control"} %>
         </div>
       </div>
 
       <div class="form-group">
-        <%= f.label :playing_time, {:class => "col-lg-2 control-label"} %>
-        <div class="col-lg-10">
+        <%= f.label :playing_time, {:class => "col-lg-3 control-label"} %>
+        <div class="col-lg-9">
         <%= f.number_field :playing_time, {:class => "form-control"} %>
         </div>
       </div>
 
       <div class="form-group">
-        <%= f.label :location, {:class => "col-lg-2 control-label"} %>
-        <div class="col-lg-10">
+        <%= f.label :location, {:class => "col-lg-3 control-label"} %>
+        <div class="col-lg-9">
         <%= f.select :location, ['UP', 'DOWN'], {}, {:class => "form-control"} %>
         </div>
       </div>
 
       <div class="form-group">
-        <%= f.label :minimum_players_age, "Min age", {:class => "col-lg-2 control-label"} %>
-        <div class="col-lg-10">
+        <%= f.label :minimum_players_age, "Min age", {:class => "col-lg-3 control-label"} %>
+        <div class="col-lg-9">
         <%= f.text_field :min_player_age, {:class => "form-control"} %>
         </div>
       </div>
 
       <div class="form-group">
-        <%= f.label :link, "Link to BGG", {:class => "col-lg-2 control-label"} %>
-        <div class="col-lg-10">
+        <%= f.label :link, "Link to BGG", {:class => "col-lg-3 control-label"} %>
+        <div class="col-lg-9">
         <%= f.text_field :link, {:class => "form-control"} %>
         </div>
       </div>
 
       <div class="form-group">
-        <%= f.label :expansion_for, {:class => "col-lg-2 control-label"} %>
-        <div class="col-lg-10">
+        <%= f.label :expansion_for, {:class => "col-lg-3 control-label"} %>
+        <div class="col-lg-9">
         <%= f.select :expansion_for, Game.all.pluck(:title, :id) << [nil], {}, {:class => "form-control"} %>
         </div>
       </div>
     
       <div class="form-group">
-        <div class="col-lg-10 col-lg-offset-2">
+        <div class="col-lg-9 col-lg-offset-3">
           <%= f.submit :class => "btn btn-primary" %>
           <%= link_to 'Back', :back, :class => "btn btn-default" %>
         </div>

@@ -13,10 +13,10 @@
   <tbody>
     <% @rentals.each do |rental| %>
       <% @class = rental.is_optional? ? (rental.is_vetoed.nil? ? "warning" : "danger") : "success"%>
-      <tr class=<%= @class %>>
+      <tr>
         <td><%= rental.start_time %></td>
         <td><%= rental.game.title %></td>
-        <td><%= rental.is_optional? ? (rental.is_vetoed.nil? ? 'Optional' : 'Vetoed') : 'Guaranteed' %></td>
+        <td class=<%= @class %>><%= rental.is_optional? ? (rental.is_vetoed.nil? ? 'Optional' : "Vetoed by #{User.find(rental.is_vetoed).email}") : 'Guaranteed' %></td>
         <td><%= link_to 'Show', rental, :class => "btn" %></td>
         <td><%= link_to 'Edit', edit_rental_path(rental), :class => "btn" %></td>
         <td><%= link_to 'Delete', rental, :class => "btn", method: :delete, data: { confirm: 'Are you sure?' } %></td>

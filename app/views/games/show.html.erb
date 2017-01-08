@@ -1,60 +1,83 @@
 <div class="row">
-  <div class="col-sm-4"></div>
-  <div class="col-sm-2"><h3><%= link_to @game.title, @game.link %></h3></div>
-  <div class="col-sm-2"><h3>Rating: <%= @game.rating %></h3></div>
-</div>
-
-<div class="row">
-  <div class="col-sm-4"></div>
-  <div class="col-sm-2">
-      <% if @game.min_players != @game.max_players %>
-        <h3> <%= @game.min_players %>-<%= @game.max_players %> players </h3>
-      <% else %>
-        <h3> <%= @game.max_players %> players </h3>
-      <% end %>
+  <div style="float: left; margin-top: 26px; margin-right: 8px; margin-left:15px">
+    <%= link_to @game.rating, @game.link, :class => "btn btn-info" %>
   </div>
-  <div class="col-sm-2"><h3> <%= @game.playing_time %> min </h3></div>
-</div>
-<div class="row">
-  <div class="col-sm-4"></div>
-  <div class="col-sm-2"><h3> Location: <%= @game.location %> </h3></div>
-  <div class="col-sm-2"><h3> Complexity: <%= @game.complexity %> </h3></div>
+
+  <div style="float:left">
+    <h1><%=  @game.title %></h1>
+  </div>
+
+  <% if user_signed_in? && current_user.is_admin? %>
+    <div style="float: left; margin-top: 26px; margin-left: 26px">
+      <%= link_to 'Edit game', edit_game_path(@game), :class => "btn btn-default" %>
+      <%= link_to 'Delete game', game_path(@game), :class => "btn btn-primary",
+              method: :delete,
+              data: { confirm: 'Are you sure?' } %>
+    </div>
+  <% end %>
 </div>
 
-  <div class="simple-calendar">
-    <%= month_calendar events: @rentals do |date, rentals| %>
-      <% game_rentals = {}
-         rentals.each do |rental|
-           game_rentals[rental.game_id] = rental if rental.is_vetoed.nil?
-         end %>
-      <% game_rental = game_rentals[@game.id] %>
-
-      <% if !game_rental.nil? %>
-        <% if game_rental.is_optional? %>
-          <% cl = "danger" %>
+<div class="well" style="max-width: 600px; padding-top: 5px; margin-top: 10px; margin-bottom: 25px">
+  <div class="row">
+    <div class="col-md-6">
+        <% if @game.min_players != @game.max_players %>
+          <h3> <%= @game.min_players %> - <%= @game.max_players %></h3>
         <% else %>
-          <% cl = "default disabled" %>
+          <h3> <%= @game.max_players %></h3>
         <% end %>
-      <% else %>
-        <% cl = "primary" %>
-      <% end %>
-
-      <div><%= link_to date, new_rental_path(date: date, game_id: @game.id), :class => "btn btn-#{cl}" %></div>
-
-      <% if !game_rental.nil? %>
-          <div><%= link_to game_rental.user.email, game_rental, :class => "" %></div>
-      <% end %>
-
-    <% end %>
+    </div>
+    <div class="col-md-6"><h3> <%= @game.playing_time %> min </h3></div>
   </div>
-<h4>
-<% if user_signed_in? && current_user.is_admin? %>
-  <td><%= link_to 'Edit game', edit_game_path(@game), :class => "btn btn-default" %></td>
-  <td><%= link_to 'Delete game', game_path(@game), :class => "btn btn-primary",
-          method: :delete,
-          data: { confirm: 'Are you sure?' } %></td>
-<% end %>
-<div><%= link_to 'Back to games list', games_path, :class => "btn btn-default" %></div>
-</h4>
+  <div class="row">
+    <div class="col-md-6"># of Players</div>
+    <div class="col-md-6">Playing time</div>
+  </div>
+  <div class="row">
+    <div class="col-md-6"><h3> <%= @game.location %> </h3></div>
+    <div class="col-md-6">
+      <div class="progress" style="margin-bottom: 0; margin-top: 30px; max-width:150px">
+        <div class="progress-bar" style="width: <%= @game.complexity*100/5.0 %>%;"><%= @game.complexity %></div>
+      </div>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">Location</div>
+    <div class="col-md-6">Complexity</div>
+  </div>
+</div>
+
+<h2 style="margin-top: 30px; margin-bottom: 20px">Calendar</h2>
+
+<div class="simple-calendar">
+  <%= month_calendar events: @rentals do |date, rentals| %>
+    <% game_rentals = {}
+       rentals.each do |rental|
+         game_rentals[rental.game_id] = rental if rental.is_vetoed.nil?
+       end %>
+    <% game_rental = game_rentals[@game.id] %>
+
+    <% if !game_rental.nil? %>
+      <% if game_rental.is_optional? %>
+        <% cl = "danger" %>
+      <% else %>
+        <% cl = "default disabled" %>
+      <% end %>
+    <% else %>
+      <% cl = "primary" %>
+    <% end %>
+
+    <div><%= link_to date, new_rental_path(date: date, game_id: @game.id), :class => "btn btn-#{cl}" %></div>
+
+    <% if !game_rental.nil? %>
+        <div><%= link_to game_rental.user.email, game_rental, :class => "" %></div>
+    <% end %>
+
+  <% end %>
+</div>
+
+
+<%= link_to 'Back to games list', games_path, :class => "btn btn-default" %>
+
 
 </div>

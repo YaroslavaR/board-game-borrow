@@ -5,13 +5,17 @@ class RentalsController < ApplicationController
   # GET /rentals
   # GET /rentals.json
   def index
-    @rentals = Rental.all.sort_by(&:start_time).reverse
+    @rentals = Rental.get_all
+  end
+
+  def my_rentals
+    @rentals = Rental.get_all_for_user current_user
   end
 
   # GET /rentals/1
   # GET /rentals/1.json
   def show
-    @rental = Rental.find(params[:id])
+    @rental = Rental.get_by_id(params[:id])
   end
 
   # GET /rentals/new
@@ -19,7 +23,6 @@ class RentalsController < ApplicationController
     @rental = current_user.rental.build
     @date = params[:date]
     @game_id = params[:game_id]
-    # @rental.end_time = @rental.start_time
   end
 
   # GET /rentals/1/edit
@@ -28,21 +31,6 @@ class RentalsController < ApplicationController
 
   # POST /rentals
   # POST /rentals.json
-  # def create
-  #   @rental = current_user.rental.build(rental_params)
-  #   @rental.end_time = @rental.start_time
-
-  #   respond_to do |format|
-  #     if @rental.save
-  #       format.html { redirect_to @rental, notice: 'Rental was successfully created.' }
-  #       format.json { render :show, status: :created, location: @rental }
-  #     else
-  #       format.html { render :new }
-  #       format.json { render json: @rental.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
-
   def create
     @rental = current_user.rental.build(rental_params)
     @rental.end_time = @rental.start_time
@@ -50,91 +38,41 @@ class RentalsController < ApplicationController
 
     date = Date.new(rental_params['start_time(1i)'].to_i, rental_params['start_time(2i)'].to_i, rental_params['start_time(3i)'].to_i)
     
-    @existing_rental = Rental.find_by(game_id: rental_params[:game_id], start_time: date, is_vetoed: nil)
-    puts '################################'
-    puts @existing_rental
-    puts '################################'
-    @user_rentals = current_user.rental.where(start_time: date)
-    puts '################################'
-    puts @user_rentals
-    puts '################################'
+    @existing_rental = Rental.get_non_vetoed_for(rental_params[:game_id], date)
+    @user_rentals = Rental.get_for_user_and_date(current_user, date)
     
-      #format.html { render :new }
-      if !@existing_rental.nil?
-        # There is a rental for that date
-        if !@existing_rental.is_optional?
-          # Existing rental is guaranteed
-          flash[:alert] = "You can't rent this game because it is rented for that day already."
-          redirect_to :back
-        elsif !@user_rentals.nil? && has_guaranteed_rental(@user_rentals)
-          flash[:alert] = "You can't rent this game because it is rented as optional and you have a guaranteed rental for that day already."
-          redirect_to :back
-        else
-          #input form
-          respond_to do |format|
-            if @rental.save
-              @existing_rental.is_vetoed = current_user.id
-              @existing_rental.save
-              format.html { redirect_to @rental, notice: "This game was rented as optional by #{@existing_rental.user.email} but you have vetoed it and rented that game." }
-              format.json { render :show, status: :created, location: @rental }
-            else
-              format.html { render :new }
-              format.json { render json: @rental.errors, status: :unprocessable_entity }
-            end
-          end
-        end
+    if !@existing_rental.nil?
+      if !@existing_rental.is_optional?
+        flash[:alert] = "You can't rent this game because it is rented for that day already."
+        redirect_to :back
+        return
       elsif !@user_rentals.nil? && has_guaranteed_rental(@user_rentals)
-        #input form
-        respond_to do |format|
-          @rental.is_optional = 1
-          if @rental.save
-              format.html { redirect_to @rental, notice: 'You have rented this game as optional. Please check again after 3pm to see if no one vetoed it.' }
-              format.json { render :show, status: :created, location: @rental }
-          else
-              format.html { render :new }
-              format.json { render json: @rental.errors, status: :unprocessable_entity }
-          end
-        end
+        flash[:alert] = "You can't rent this game because it is rented as optional and you have a guaranteed rental for that day already."
+        redirect_to :back
+        return
       else
-        #input form
-        respond_to do |format|
-          if @rental.save
-              format.html { redirect_to @rental, notice: 'You have rented this game. Your reservation is guaranteed.' }
-              format.json { render :show, status: :created, location: @rental }
-          else
-              format.html { render :new }
-              format.json { render json: @rental.errors, status: :unprocessable_entity }
-          end
-        end
+        @message = "This game was rented as optional by #{@existing_rental.user.email} but you have vetoed it and rented that game."
+        @existing_rental.is_vetoed = current_user.id
+        @existing_rental.save
       end
-    
+    elsif !@user_rentals.nil? && has_guaranteed_rental(@user_rentals)
+      @message = 'You have rented this game as optional. Please check again after 3pm to see if no one vetoed it.'
+      @optional = true
+    else
+      @message = 'You have rented this game. Your reservation is guaranteed.'
+    end
+
+    respond_to do |format|
+      @rental.is_optional = 1 if @optional == true
+      if @rental.save
+        format.html { redirect_to @rental, notice: @message }
+        format.json { render :show, status: :created, location: @rental }
+      else
+        format.html { render :new }
+        format.json { render json: @rental.errors, status: :unprocessable_entity }
+      end
+    end
   end
-
-  # def create
-  #   @rental = current_user.rental.build(rental_params)
-  #   @existing_rental = Rental.find_by(game_id: rental_params[:game_id], start_time: rental_params[:date])
-  #   if !@existing_rental.nil? && @existing_rental.is_optional?
-  #     @user_rentals = current_user.rental.find(rental_params[:date])
-  #     if @user_rentals.nil?
-        
-  #       respond_to do |format|
-  #         if @rental.save
-  #           format.html { redirect_to @rental, notice: 'Rental was successfully created.' }
-  #           format.json { render :show, status: :created, location: @rental }
-  #         else
-  #           format.html { render :new }
-  #           format.json { render json: @rental.errors, status: :unprocessable_entity }
-  #         end
-  #       end
-  #     end
-        
-  #       @user_rentals.each do |user_rentals|
-  #         if !user_rental.is_optional?
-  #         end
-  #       end
-  #     end
-  #   end
-
   # PATCH/PUT /rentals/1
   # PATCH/PUT /rentals/1.json
   def update
@@ -159,15 +97,10 @@ class RentalsController < ApplicationController
     end
   end
 
-  def my_rentals
-    @rentals = current_user.rental.sort_by(&:start_time).reverse
-    
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_rental
-      @rental = Rental.find(params[:id])
+      @rental = Rental.get_by_id(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
