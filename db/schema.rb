@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170108152847) do
+ActiveRecord::Schema.define(version: 20170109000655) do
 
   create_table "games", force: :cascade do |t|
     t.string   "title"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20170108152847) do
     t.datetime "updated_at",     null: false
     t.float    "rating"
     t.integer  "expansion_for"
+    t.integer  "is_deleted"
   end
 
   create_table "rentals", force: :cascade do |t|

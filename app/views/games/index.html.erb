@@ -9,9 +9,9 @@
 <% end %>
 
 
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered table-hover">
   <tr>
-    <th>Title (with BGG rating)</th>
+    <th>Game title (with BGG rating)</th>
     <th># of Players</th>
     <th>Playing time</th>
     <th>Complexity</th>
@@ -22,9 +22,9 @@
       <td><%= link_to game.rating, game.link, :class => "btn btn-info btn-xs", :style => "margin-right: 10px; margin-bottom: 3px" %><strong><%= link_to game.title, game_path(game) %></strong></td>
       <td>
         <% if game.min_players != game.max_players %>
-          <%= game.min_players %>-<%= game.max_players %> players
+          <%= game.min_players %> - <%= game.max_players %>
         <% else %>
-          <%= game.max_players %> players
+          <%= game.max_players %>
         <% end %>
       </td>
       <td><%= game.playing_time %> min</td>

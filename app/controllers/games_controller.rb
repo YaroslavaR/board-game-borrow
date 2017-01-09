@@ -4,7 +4,7 @@ class GamesController < ApplicationController
   #http_basic_authenticate_with name: "admin", password: "secret", except: [:index, :show]
 
   def index
-    @games = Game.all
+    @games = Game.where(is_deleted: 0)
   end  
 
   def new
@@ -17,7 +17,7 @@ class GamesController < ApplicationController
  
   def create
     @game = Game.new(game_params)
- 
+    @game.is_deleted = 0
     if @game.save
       redirect_to @game
     else
@@ -42,8 +42,8 @@ class GamesController < ApplicationController
 
   def destroy
     @game = Game.find(params[:id])
-    @game.destroy
- 
+    @game.is_deleted = 1
+    @game.save
     redirect_to games_path
   end
 

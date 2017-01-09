@@ -1,32 +1,39 @@
-<p id="notice"><%= notice %></p>
+<div style="float:left">
+  <h1>Rentals</h1>
+</div>
 
-<h1>Rentals</h1>
+<div style="float: left; margin-top: 26px; margin-left: 26px">
+  <%= link_to 'Rent a game', new_rental_path, :class => "btn btn-default" %>
+</div>
 
 <table  class="table table-striped table-bordered table-hover">
-  <thead>
+  <tbody>
     <tr>
       <th>Date</th>
-      <th>Game</th>
-      <th>Name</th>
-      <th>Email</th>
+      <th>Game title</th>
+      <th>Borrower</th>
       <th>Status</th>
-      <th><%= link_to 'Rent a game', new_rental_path, :class => "btn btn-default" %></th>
+      <% if user_signed_in? %>
+      <th></th>
+      <% end %>
     </tr>
-  </thead>
 
-  <tbody>
     <% @rentals.each do |rental| %>
-        <tr>
-          <td><%= link_to rental.start_time, rental %></td>
-          <td><%= link_to rental.game.title, rental %></td>
-          <td><%= rental.user.name %></td> 
-          <td><%= rental.user.email %></td>
-          <td><%= rental.is_optional? ? (rental.is_vetoed.nil? ? 'Optional' : "Vetoed by #{User.find(rental.is_vetoed).email}") : 'Guaranteed' %></td>
-          <% if rental.user == current_user %>
-            <td><%= link_to 'Edit', edit_rental_path(rental), :class => "btn btn-default btn-sm" %>
-            <%= link_to 'Delete', rental, :class => "btn btn-primary btn-sm", method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          <% end %>
-        </tr>
+      <% @class = rental.is_optional? ? (rental.is_vetoed.nil? ? "warning" : "danger") : "success"%>
+      <tr>
+        <td><strong><%= link_to rental.start_time, rental %></strong></td>
+        <td><%= link_to rental.game.rating, rental.game.link, :class => "btn btn-info btn-xs", :style => "margin-right: 10px; margin-bottom: 3px" %><strong><%= link_to rental.game.title, rental.game %></strong></td>
+        <td><%= rental.user.name %> (<%= rental.user.email %>)</td> 
+        <td class=<%= @class %>><%= rental.is_optional? ? (rental.is_vetoed.nil? ? 'Optional' : "Vetoed by #{User.find(rental.is_vetoed).email}") : 'Guaranteed' %></td>
+        <% if user_signed_in? %>
+          <td>
+            <% if rental.user == current_user %>
+              <%= link_to 'Edit', edit_rental_path(rental), :class => "btn btn-default btn-xs" %>
+              <%= link_to 'Delete', rental, :class => "btn btn-primary btn-xs", method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
   <% end %>
   </tbody>
 </table>

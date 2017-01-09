@@ -83,7 +83,7 @@
       <div class="form-group">
         <%= f.label :expansion_for, {:class => "col-lg-3 control-label"} %>
         <div class="col-lg-9">
-        <%= f.select :expansion_for, Game.all.pluck(:title, :id) << [nil], {}, {:class => "form-control"} %>
+        <%= f.select :expansion_for, Game.all.pluck(:title, :id) << [nil], {:selected => ""}, {:class => "form-control"} %>
         </div>
       </div>
     
