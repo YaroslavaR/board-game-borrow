@@ -1,33 +1,33 @@
-<h1>My Rentals</h1>
+<div style="float:left">
+  <h1>My Rentals</h1>
+</div>
+
+<div style="float: left; margin-top: 26px; margin-left: 26px">
+  <%= link_to 'Rent a game', new_rental_path, :class => "btn btn-default" %>
+</div>
 
 <table class="table table-striped table-bordered table-hover">
-  <thead class="thead-inverse">
-    <tr>
-      <th>Name</th>
-      <th>Start time</th>
-      <th>End time</th>
-      <th>Game</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
   <tbody>
+    <tr>
+      <th>Date</th>
+      <th>Game title</th>
+      <th>Status</th>
+      <th></th>
+    </tr>
+
     <% @rentals.each do |rental| %>
-     
-        <tr>
-          <td><%= rental.name %></td>
-          <td><%= rental.start_time %></td>
-          <td><%= rental.end_time %></td>
-          <td><%= rental.game_id %></td>
-          <td><%= link_to 'Show', rental %></td>
-          <td><%= link_to 'Edit', edit_rental_path(rental) %></td>
-          <td><%= link_to 'Destroy', rental, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-  
+      <% @class = rental.is_optional? ? (rental.is_vetoed.nil? ? "warning" : "danger") : "success"%>
+      <tr>
+        <td><strong><%= link_to rental.start_time, rental %></strong></td>
+        <td><%= link_to rental.game.rating, rental.game.link, :class => "btn btn-info btn-xs", :style => "margin-right: 10px; margin-bottom: 3px" %><strong><%= link_to rental.game.title, rental.game %></strong></td>
+        <td class=<%= @class %>><%= rental.is_optional? ? (rental.is_vetoed.nil? ? 'Optional' : "Vetoed by #{User.find(rental.is_vetoed).email}") : 'Guaranteed' %></td>
+        <td>
+        <% if rental.user == current_user %>
+          <%= link_to 'Edit', edit_rental_path(rental), :class => "btn btn-default btn-xs" %>
+          <%= link_to 'Delete', rental, :class => "btn btn-primary btn-xs", method: :delete, data: { confirm: 'Are you sure?' } %>
+        <% end %>
+        </td>
+      </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Rental', new_rental_path %>

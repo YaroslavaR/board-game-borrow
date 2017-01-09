@@ -10,30 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170105231311) do
+ActiveRecord::Schema.define(version: 20170109000655) do
 
   create_table "games", force: :cascade do |t|
     t.string   "title"
     t.integer  "min_players"
     t.integer  "max_players"
     t.integer  "min_player_age"
-    t.integer  "max_player_age"
     t.integer  "playing_time"
     t.float    "complexity"
     t.string   "location"
     t.string   "link"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.float    "rating"
+    t.integer  "expansion_for"
+    t.integer  "is_deleted"
   end
 
   create_table "rentals", force: :cascade do |t|
     t.string   "name"
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.date     "start_time"
+    t.date     "end_time"
     t.integer  "game_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.integer  "user_id"
+    t.integer  "is_optional", default: 0
+    t.integer  "is_vetoed"
     t.index ["game_id"], name: "index_rentals_on_game_id"
   end
 
