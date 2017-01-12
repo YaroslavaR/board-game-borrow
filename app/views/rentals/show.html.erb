@@ -9,7 +9,9 @@
         <th>Game</th>
         <th>Borrower</th>
         <th>Status</th>
-        <th></th>
+        <% if @rental.user == current_user %>
+          <th></th>
+        <% end %>
       </tr>
 
         <% @class = @rental.is_optional? ? (@rental.is_vetoed.nil? ? "warning" : "danger") : "success"%>
@@ -18,8 +20,11 @@
           <td><%= link_to @rental.game.rating, @rental.game.link, :class => "btn btn-info btn-xs", :style => "margin-right: 10px; margin-bottom: 3px" %><strong><%= link_to @rental.game.title, @rental.game %></strong></td>
           <td><%= @rental.user.name %> (<%= @rental.user.email %>)</td> 
           <td class=<%= @class %>><%= @rental.is_optional? ? (@rental.is_vetoed.nil? ? 'Optional' : 'Vetoed') : 'Guaranteed' %></td>
-          <td><%= link_to 'Edit', edit_rental_path(@rental), :class => "btn btn-default btn-xs" %>
-          <%= link_to 'Delete', @rental, :class => "btn btn-primary btn-xs", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% if @rental.user == current_user %>
+            <td>
+              <%= link_to 'Delete', @rental, :class => "btn btn-primary btn-xs", method: :delete, data: { confirm: 'Are you sure?' } %>
+           </td>
+          <% end %>
         </tr>
     </tbody>
   </table>

@@ -23,7 +23,6 @@
         <td class=<%= @class %>><%= rental.is_optional? ? (rental.is_vetoed.nil? ? 'Optional' : "Vetoed by #{User.find(rental.is_vetoed).email}") : 'Guaranteed' %></td>
         <td>
         <% if rental.user == current_user %>
-          <%= link_to 'Edit', edit_rental_path(rental), :class => "btn btn-default btn-xs" %>
           <%= link_to 'Delete', rental, :class => "btn btn-primary btn-xs", method: :delete, data: { confirm: 'Are you sure?' } %>
         <% end %>
         </td>

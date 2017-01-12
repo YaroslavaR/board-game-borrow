@@ -73,26 +73,13 @@ class RentalsController < ApplicationController
       end
     end
   end
-  # PATCH/PUT /rentals/1
-  # PATCH/PUT /rentals/1.json
-  def update
-    respond_to do |format|
-      if @rental.update(rental_params)
-        format.html { redirect_to @rental, notice: 'Rental was successfully updated.' }
-        format.json { render :show, status: :ok, location: @rental }
-      else
-        format.html { render :edit }
-        format.json { render json: @rental.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # DELETE /rentals/1
   # DELETE /rentals/1.json
   def destroy
     @rental.destroy
     respond_to do |format|
-      format.html { redirect_to rentals_url, notice: 'Rental was successfully destroyed.' }
+      format.html { redirect_to rentals_url, notice: 'Rental was successfully deleted.' }
       format.json { head :no_content }
     end
   end
@@ -103,11 +90,12 @@ class RentalsController < ApplicationController
       @rental = Rental.get_by_id(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Allowed and required parameters for rental creation/edition
     def rental_params
       params.require(:rental).permit(:name, :start_time, :end_time, :game_id, :is_optional)
     end
 
+    # Check if user has a guaranteed rental already
     def has_guaranteed_rental(rentals)
       rentals.each do |r|
         if !r.is_optional?
