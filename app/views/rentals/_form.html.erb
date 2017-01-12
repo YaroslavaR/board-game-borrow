@@ -23,7 +23,7 @@
       <div class="form-group">
         <%= f.label :game_id, {:class => "col-lg-3 control-label"} %>
         <div class="col-lg-9">
-          <%= f.select :game_id, Game.all.pluck(:title, :id), {:selected => (@game_id.nil? ? 1 : @game_id)}, {:class => "form-control"} %>
+          <%= f.select :game_id, Game.get_all_active.pluck(:title, :id), {:selected => (@game_id.nil? ? 1 : @game_id)}, {:class => "form-control"} %>
         </div>
       </div>
 

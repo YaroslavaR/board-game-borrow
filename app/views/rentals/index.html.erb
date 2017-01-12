@@ -28,7 +28,6 @@
         <% if user_signed_in? %>
           <td>
             <% if rental.user == current_user %>
-              <%= link_to 'Edit', edit_rental_path(rental), :class => "btn btn-default btn-xs" %>
               <%= link_to 'Delete', rental, :class => "btn btn-primary btn-xs", method: :delete, data: { confirm: 'Are you sure?' } %>
             <% end %>
           </td>
