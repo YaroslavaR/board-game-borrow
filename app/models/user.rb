@@ -1,3 +1,4 @@
+# Class User from Devise gem. Describes User objects
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

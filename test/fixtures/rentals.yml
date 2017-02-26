@@ -1,13 +1,21 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   name: MyString
-  start_time: 2017-01-03 23:28:35
-  end_time: 2017-01-03 23:28:35
-  game: one
+  start_time: 2017-01-04
+  end_time: 2017-01-04
+  is_optional: 0
+  is_vetoed: 0
+  game_id: 1
+  user_id: 3
 
 two:
+  id: 2
   name: MyString
-  start_time: 2017-01-03 23:28:35
-  end_time: 2017-01-03 23:28:35
-  game: two
+  start_time: 2017-01-04
+  end_time: 2017-01-04
+  is_optional: 1
+  is_vetoed: 0
+  game_id: 2
+  user_id: 3

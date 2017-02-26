@@ -1,3 +1,4 @@
+# Class responsible for processing requests and generating responses for devise registration
 class RegistrationsController < Devise::RegistrationsController
 
   private

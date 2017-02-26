@@ -1,24 +1,27 @@
+# Class responsible for processing requests and generating responses for rentals
 class RentalsController < ApplicationController
   before_action :set_rental, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
 
   # GET /rentals
-  # GET /rentals.json
+  # Get all rentals sorted by creation date
   def index
     @rentals = Rental.get_all
   end
 
+  # Get all rentals for current user
   def my_rentals
     @rentals = Rental.get_all_for_user current_user
   end
 
   # GET /rentals/1
-  # GET /rentals/1.json
+  # Get rental by id
   def show
     @rental = Rental.get_by_id(params[:id])
   end
 
   # GET /rentals/new
+  # Render new rental view
   def new
     @rental = current_user.rental.build
     @date = params[:date]
@@ -26,11 +29,12 @@ class RentalsController < ApplicationController
   end
 
   # GET /rentals/1/edit
+  # Edit existing rental
   def edit
   end
 
   # POST /rentals
-  # POST /rentals.json
+  # Create new rental
   def create
     @rental = current_user.rental.build(rental_params)
     @rental.end_time = @rental.start_time
@@ -75,7 +79,7 @@ class RentalsController < ApplicationController
   end
 
   # DELETE /rentals/1
-  # DELETE /rentals/1.json
+  # Delete reservation
   def destroy
     @rental.destroy
     respond_to do |format|

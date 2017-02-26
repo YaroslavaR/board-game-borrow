@@ -1,21 +1,24 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  id: 
+  id: 1
   title: MyString
   min_players: 1
   max_players: 1
   playing_time: 1
   complexity: 1.5
   location: MyString
+  rating: 3.0
   link: MyString
+  is_deleted: NULL
 
 two:
-  id: 
-  title: MyString
+  id: 2
+  title: title
   min_players: 1
   max_players: 1
   playing_time: 1
   complexity: 1.5
-  location: MyString
-  link: MyString
+  location: location
+  rating: 4.0
+  link: link

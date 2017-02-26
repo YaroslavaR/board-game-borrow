@@ -1,4 +1,4 @@
-# Decorator for Rental model
+# Decorator module allowing to add new functionality to Rental object without altering its structure
 module RentalDecorator
 	# Get all rentals - ordered by start_time DESC
 	def get_all
@@ -26,6 +26,7 @@ module RentalDecorator
 	end
 end
 
+# Game class describing rental objects
 class Rental < ApplicationRecord
   	belongs_to :game
   	belongs_to :user

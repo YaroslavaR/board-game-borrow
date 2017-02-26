@@ -12,6 +12,7 @@
  *
  *= require_tree .
  *= require_self
+ *
+ *= require games
+ *= require simple_calendar
  */
-*= require games
-*= require simple_calendar

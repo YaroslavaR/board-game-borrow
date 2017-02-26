@@ -1,15 +1,16 @@
+# Class responsible for processing requests and generating responses for games
 class GamesController < ApplicationController
   before_action :set_rentals
   before_action :authenticate_user!, except: [:index, :show]
   before_filter :verify_is_admin, except: [:index, :show]
 
 
-  # Get all games that are not deleted
+ # Get all games that are not deleted
   def index
     @games = Game.get_all_active
   end  
 
-  
+  # Render new game view
   def new
     @game = Game.new
   end
@@ -33,7 +34,6 @@ class GamesController < ApplicationController
   # Show one game
   def show
     @game = Game.find(params[:id])
-    #render template: "rentals/index"
   end
 
   # Update data for a game
@@ -60,10 +60,12 @@ class GamesController < ApplicationController
     params.require(:game).permit(:title, :min_players, :max_players, :min_player_age, :rating, :playing_time, :complexity, :location, :link, :expansion_for)
   end
 
+  # Verifying if the current user has admin privileges
   private def verify_is_admin
     (current_user.nil?) ? redirect_to(games_path) : (redirect_to(games_path) unless current_user.is_admin?)
   end
 
+  # Get all rentals
   def set_rentals
     @rentals = Rental.all
   end
