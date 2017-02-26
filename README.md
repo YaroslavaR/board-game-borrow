@@ -1,6 +1,6 @@
 # README
 
-This README documents steps and dependenciesthat are necessary to get the
+This README documents steps and dependencies that are necessary to get the
 application up and running.
 
 * Ruby version >=2.3.0
@@ -8,13 +8,13 @@ application up and running.
 * Rails version >=5.0.0.1
 
 * Dependencies:
-** Bundler ( `gem install bundler` )
+    *  Bundler ( `gem install bundler` )
 
 * Database configuration
-** Located in config/database.yml
+    * Located in config/database.yml
 
 * How to run the test suite
-** `bin/rails test`
+    * `bin/rails test`
 
 * Deployment instructions
-** `sh bin/init.sh`
+    * `sh bin/init.sh`
