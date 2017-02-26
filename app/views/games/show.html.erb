@@ -49,7 +49,6 @@
 
 <h2 style="margin-top: 30px; margin-bottom: 20px">Calendar</h2>
 
-<div class="simple-calendar">
   <%= month_calendar events: @rentals do |date, rentals| %>
     <% game_rentals = {}
        rentals.each do |rental|
@@ -74,7 +73,6 @@
     <% end %>
 
   <% end %>
-</div>
 
 
 <%= link_to 'Back to games list', games_path, :class => "btn btn-default" %>
