@@ -1,24 +1,20 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
+This README documents steps and dependenciesthat are necessary to get the
 application up and running.
 
-Things you may want to cover:
+* Ruby version >=2.3.0
 
-* Ruby version
+* Rails version >=5.0.0.1
 
-* System dependencies
+* Dependencies:
+** Bundler ( `gem install bundler` )
 
-* Configuration
-
-* Database creation
-
-* Database initialization
+* Database configuration
+** Located in config/database.yml
 
 * How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
+** `bin/rails test`
 
 * Deployment instructions
-
-* ...
+** `sh bin/init.sh`
