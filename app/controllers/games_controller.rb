@@ -2,7 +2,7 @@
 class GamesController < ApplicationController
   before_action :set_rentals
   before_action :authenticate_user!, except: [:index, :show]
-  before_filter :verify_is_admin, except: [:index, :show]
+  before_action :verify_is_admin, except: [:index, :show]
 
 
  # Get all games that are not deleted
